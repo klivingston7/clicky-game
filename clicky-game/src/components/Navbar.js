@@ -1,0 +1,10 @@
+import React from "react";
+
+const Navbar = props => (
+    <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+        <a className="navbar-brand" href="/">Clicky Game</a>
+        <h4 className="ml-auto mt-2" id="counters">Score: 0 | Top score: 0 </h4>
+    </nav>
+)
+
+export default Navbar;
