@@ -1,48 +1,69 @@
 import React, {Component} from 'react';
 import Card from './Card';
-// import PusheenBurger from "./../pusheen_burger.gif"
-// import PusheenBread from "./../pusheen_bread.gif"
 import Pusheens from "./../pusheens.json"
+import shuffle from "shuffle-array";
 
 class CardContainer extends Component {
 
     state = {
         count: 0,
-        pusheens: Pusheens
+        pusheens: Pusheens,
+        selected: []
     };
 
-    handleClick = () => {
-        this.changeCount();
-        this.shuffle();
+    handleClick = (id) => {
+        this.setState({ pusheens: shuffle(this.state.pusheens)});
+        this.checkSelected(id);
+        console.log("handling Click");
     }
 
     changeCount = () => {
-        console.log("clicked");
         this.setState({ count: this.state.count + 1 });
-        console.log(this.state.count)
+        console.log("Current clicks: " + this.state.count)
     }
 
-    shuffle = () => {
-        console.log("Shuffling...");
-        // Filter this.state.friends for friends with an id not equal to the id being removed
-        const characters = this.state.characters;
-        for (var i = 0; i < characters.length - 1; i++) {
-          var j = i + Math.floor(Math.random() * (characters.length - i));
-    
-          var temp = characters[j];
-          characters[j] = characters[i];
-          characters[i] = temp;
+    checkSelected = (id) => {
+
+        if (this.state.selected.length < 1) {
+            this.addToSelected(id);
+            this.changeCount();
+            console.log("Adding " + id + " to selected array");
         }
-        // Set this.state.friends equal to the new friends array
-    
-        this.setState({ characters });
-    };
+
+        else {
+            this.state.selected.map(pusheen => {
+                if (pusheen.id === id) {
+                    this.endGame();
+                }
+
+                else {
+                    // this.addToSelected(id);
+                    this.changeCount();
+                    console.log("Adding " + id + " to selected array")
+                    console.log(this.state.selected)
+                }
+            })
+        }
+    }
+
+    addToSelected = (id) => {
+        this.state.pusheens.map(pusheen => {
+            if (pusheen.id === id) {
+                this.state.selected.push(pusheen);
+                console.log(this.state.selected);
+            }
+        })
+    }
+
+    endGame = () => {
+        console.log("End!");  
+    }
 
     render() {
         return (
             <div className="container" id="card-container">
                 <div className="row">
-                    {Pusheens.map(pusheen => <Card src={pusheen.image} key={pusheen.id} alt={pusheen.name} onClick={this.handleClick}/>)}
+                    {Pusheens.map(pusheen => <Card src={pusheen.image} key={pusheen.id} id={pusheen.id} alt={pusheen.name} onClick={this.handleClick}/>)}
                 </div>
             </div>
         );
