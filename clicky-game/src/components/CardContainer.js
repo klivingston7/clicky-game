@@ -5,8 +5,12 @@ import shuffle from "shuffle-array";
 
 class CardContainer extends Component {
 
+    constructor(props) {
+        super(props);
+    }
+
     state = {
-        count: 0,
+        count: 1,
         pusheens: Pusheens,
         selected: []
     };
@@ -14,12 +18,12 @@ class CardContainer extends Component {
     handleClick = (id) => {
         this.setState({ pusheens: shuffle(this.state.pusheens)});
         this.checkSelected(id);
-        console.log("handling Click");
     }
 
     changeCount = () => {
         this.setState({ count: this.state.count + 1 });
         console.log("Current clicks: " + this.state.count)
+        this.props.updateCurrentScore(this.state.count);
     }
 
     checkSelected = (id) => {
@@ -37,10 +41,9 @@ class CardContainer extends Component {
                 }
 
                 else {
-                    // this.addToSelected(id);
+                    this.addToSelected(id);
                     this.changeCount();
                     console.log("Adding " + id + " to selected array")
-                    console.log(this.state.selected)
                 }
             })
         }
@@ -49,14 +52,19 @@ class CardContainer extends Component {
     addToSelected = (id) => {
         this.state.pusheens.map(pusheen => {
             if (pusheen.id === id) {
-                this.state.selected.push(pusheen);
+                this.state.selected.push(pusheen)
+                this.setState({selected: this.state.selected});
                 console.log(this.state.selected);
             }
         })
     }
 
     endGame = () => {
-        console.log("End!");  
+        console.log("End!"); 
+        this.props.updateTopScore(this.state.count); 
+        this.setState({count: 1, selected: []});
+        this.props.updateCurrentScore(this.state.count);
+        
     }
 
     render() {
