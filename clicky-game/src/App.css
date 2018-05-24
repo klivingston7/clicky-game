@@ -20,3 +20,11 @@
 .card {
   width: 200px;
 }
+
+#logo {
+  font-family: 'Barlow', sans-serif;
+}
+
+.subtitle, #counters {
+  font-family: 'Roboto', sans-serif;
+}

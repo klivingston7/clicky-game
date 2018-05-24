@@ -30,7 +30,6 @@ class CardContainer extends Component {
 
         if (this.state.selected.length < 1) {
             this.addToSelected(id);
-            this.changeCount();
             console.log("Adding " + id + " to selected array");
         }
 
@@ -42,7 +41,6 @@ class CardContainer extends Component {
 
                 else {
                     this.addToSelected(id);
-                    this.changeCount();
                     console.log("Adding " + id + " to selected array")
                 }
             })
@@ -52,6 +50,7 @@ class CardContainer extends Component {
     addToSelected = (id) => {
         this.state.pusheens.map(pusheen => {
             if (pusheen.id === id) {
+                this.changeCount();
                 this.state.selected.push(pusheen)
                 this.setState({selected: this.state.selected});
                 console.log(this.state.selected);
@@ -64,7 +63,6 @@ class CardContainer extends Component {
         this.props.updateTopScore(this.state.count); 
         this.setState({count: 1, selected: []});
         this.props.updateCurrentScore(this.state.count);
-        
     }
 
     render() {
