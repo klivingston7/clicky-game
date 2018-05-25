@@ -11,32 +11,38 @@ class CardContainer extends Component {
 
     state = {
         score: 1,
-        count: 1,
         pusheens: Pusheens,
+        gameCount: 1
     };
 
     handleClick = () => {
+        // SHUFFLE THE PUSHEENS
         this.setState({ pusheens: shuffle(this.state.pusheens)});
-        this.setState({score: this.state.score + 1});
         console.log("Shuffling Pusheens");
+        this.updateScore();
+    }
+
+    updateScore = () => {
+        // UPDATE SCORE
+        this.setState({score: this.state.score + 1});
         this.props.updateCurrentScore(this.state.score);
         console.log("Score: " + this.state.score);
     }
 
-
     endGame = () => {
         console.log("End!"); 
+        this.setState({gameCount: this.state.gameCount + 1})
         this.props.updateTopScore(this.state.score); 
         this.setState({score: 1});
         this.props.updateCurrentScore(this.state.score - 1);
-        this.render();
+        this.forceUpdate();
     }
 
     render() {
         return (
             <div className="container" id="card-container">
                 <div className="row">
-                    {Pusheens.map(pusheen => <Card src={pusheen.image} key={pusheen.id} id={pusheen.id} alt={pusheen.name} endGame={this.endGame} onClick={this.handleClick} score={this.state.score} count="this.state.count"/>)}
+                    {Pusheens.map(pusheen => <Card src={pusheen.image} key={pusheen.id} id={pusheen.id} alt={pusheen.name} endGame={this.endGame} handleClick={this.handleClick} score={this.state.score} />)}
                 </div>
             </div>
         );

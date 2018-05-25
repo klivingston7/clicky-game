@@ -6,31 +6,24 @@ class Card extends Component {
     }
 
     state = {
-        count: 1
+        count: 1,
+        gameCount: 1
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.gameCount !== this.state.gameCount) {
+            this.setState({count: 1, gameCount: nextProps.gameCount});
+            console.log("Resetting Pusheens")
+        }
     }
 
     checkGame = () => {
-
-        if (this.props.score === 1) {
-            this.setState({count: 1});
-            this.handleClick()
-        }
-        else {
-            this.handleClick();
-        }
-    }
-
-    handleClick = () => {
-        this.props.onClick();
-
-        if (this.state.count > 1) {
-            this.props.endGame();
-            this.setState({score: 1});
-            console.log("Ending game!")
-        }
-        else {
+        if (this.state.count === 1) {
             this.setState({ count: this.state.count + 1 });
-            console.log("Current clicks: " + this.state.count)
+            this.props.handleClick()
+        }
+        else {
+            this.props.endGame();
         }
     }
 
