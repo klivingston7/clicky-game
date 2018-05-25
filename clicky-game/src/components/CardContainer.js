@@ -17,7 +17,13 @@ class CardContainer extends Component {
 
     handleClick = (id) => {
         this.setState({ pusheens: shuffle(this.state.pusheens)});
-        this.checkSelected(id);
+        if (this.state.selected.length < 1) {
+            this.addToSelected(id);
+            console.log("Adding " + id + " to selected array");
+        }
+        else {
+            this.checkSelected(id);
+        }
     }
 
     changeCount = () => {
@@ -27,31 +33,23 @@ class CardContainer extends Component {
     }
 
     checkSelected = (id) => {
+        this.state.selected.map(pusheen => {
+            if (pusheen.id === id) {
+                this.endGame();
+            }
 
-        if (this.state.selected.length < 1) {
-            this.addToSelected(id);
-            console.log("Adding " + id + " to selected array");
-        }
-
-        else {
-            this.state.selected.map(pusheen => {
-                if (pusheen.id === id) {
-                    this.endGame();
-                }
-
-                else {
-                    this.addToSelected(id);
-                    console.log("Adding " + id + " to selected array")
-                }
-            })
-        }
+            else {
+                this.addToSelected(id);
+                console.log("Adding " + id + " to selected array")
+            }
+        })
     }
-
+    
     addToSelected = (id) => {
         this.state.pusheens.map(pusheen => {
             if (pusheen.id === id) {
                 this.changeCount();
-                this.state.selected.push(pusheen)
+                this.state.selected.push(pusheen);
                 this.setState({selected: this.state.selected});
                 console.log(this.state.selected);
             }
