@@ -1,6 +1,6 @@
 # Clicky Game
 
-This app is a front-end game built with React.js. THe user's goal is to click on each Pusheen card only one time. There are 12 total cards that shuffle automatically on each click, making it more difficult for the user to remember which cards they have not clicked.
+This app is a front-end game built with React.js. The user's goal is to click on each Pusheen card only one time. There are 12 total cards that shuffle automatically on each click, making it more difficult for the user to remember which cards they have not clicked.
 
 ## Visit the site
 https://evening-tor-79650.herokuapp.com/
